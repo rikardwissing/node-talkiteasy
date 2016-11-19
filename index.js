@@ -51,6 +51,16 @@ var getUrl = function(text, options) {
   }
 }
 
+var reqToOptions = function(req){
+  return {
+    service: req.params.service || req.query.s,
+    codec: req.params.codec || req.query.c,
+    format: req.query.f,
+    rate: req.query.r,
+    language: req.query.l
+  }
+}
+
 module.exports = function (app) {
   var module = {};
 
@@ -64,14 +74,16 @@ module.exports = function (app) {
   };
 
   if(app) {
+    app.get('/say/:text.:codec', function(req, res) {
+      module.pipe(res, req.params.text, reqToOptions(req));
+    });
+
+    app.get('/say/:text', function(req, res) {
+      module.pipe(res, req.params.text, reqToOptions(req));
+    });
+
     app.get('/tts/:service/:text.:codec', function(req, res) {
-      module.pipe(res, params.text, {
-        service: req.params.service,
-        codec: req.params.codec,
-        format: req.query.f,
-        rate: req.query.r,
-        language: req.query.l
-      });
+      module.pipe(res, req.params.text, reqToOptions(req));
     });
   }
 

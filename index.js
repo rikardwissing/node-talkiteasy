@@ -8,7 +8,7 @@ const querystring = require('querystring');
 
 
 let defaultOptions = (options) => extend(config.defaultOptions, options);
-let reqToOptions = (req) => extend(req.params, req.query);
+let reqToOptions = (req) => extend(req.params, req.query, req.body);
 
 let getUrl = (text, options) => 
     options.service == 'google' ? getUrlGoogle(text, options)
@@ -45,7 +45,7 @@ module.exports = function (app) {
     app.get('/say/:text', (req, res) => module.pipe(res, req.params.text, reqToOptions(req)));
     app.get('/say/:text/voice.:codec', (req, res) => module.pipe(res, req.params.text, reqToOptions(req)));
     app.get('/tts/voice.:codec', (req, res) => module.pipe(res, req.query.text, reqToOptions(req)));
-    app.post('/tts/voice.:codec', (req, res) => module.pipe(res, req.query.text, reqToOptions(req)));
+    app.post('/tts/voice.:codec', (req, res) => module.pipe(res, req.body.text, reqToOptions(req)));
   }
 
   return module;

@@ -1,0 +1,23 @@
+{
+  "name": "talkiteasy",
+  "version": "1.0.0",
+  "description": "A TTS Module Using Google And VoiceRSS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rikardwissing/node-talkiteasy.git"
+  },
+  "author": "Rikard Wissing",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rikardwissing/node-talkiteasy/issues"
+  },
+  "homepage": "https://github.com/rikardwissing/node-talkiteasy#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "request": "^2.79.0"
+  }
+}

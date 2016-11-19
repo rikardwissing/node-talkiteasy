@@ -45,6 +45,7 @@ module.exports = function (app) {
     app.get('/say/:text', (req, res) => module.pipe(res, req.params.text, reqToOptions(req)));
     app.get('/say/:text/voice.:codec', (req, res) => module.pipe(res, req.params.text, reqToOptions(req)));
     app.get('/tts/voice.:codec', (req, res) => module.pipe(res, req.query.text, reqToOptions(req)));
+    app.post('/tts/voice.:codec', (req, res) => module.pipe(res, req.query.text, reqToOptions(req)));
   }
 
   return module;

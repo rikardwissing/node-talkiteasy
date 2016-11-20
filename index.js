@@ -6,7 +6,6 @@ const extend = require('extend');
 const request = require('request');
 const querystring = require('querystring');
 
-
 let defaultOptions = (options) => extend(config.defaultOptions, options);
 let reqToOptions = (req) => extend(req.params, req.query, req.body);
 
@@ -34,7 +33,11 @@ let getQueryObjectVoiceRSS = (text, options) => ({
   c: options.codec
 });
 
-module.exports = {
-  getUrl: (text, options) => getUrl(text, defaultOptions(options)),
-  pipe: (res, text, options) => request(module.getUrl(text, defaultOptions(options))).pipe(res)
+module.exports = function () {
+  let module = {};
+
+  module.getUrl = (text, options) => getUrl(text, defaultOptions(options));
+  module.pipe = (res, text, options) => request(module.getUrl(text, defaultOptions(options))).pipe(res);
+
+  return module;
 }

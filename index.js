@@ -6,6 +6,7 @@ const extend = require('extend');
 const request = require('request');
 const querystring = require('querystring');
 
+
 let defaultOptions = (options) => extend(config.defaultOptions, options);
 let reqToOptions = (req) => extend(req.params, req.query, req.body);
 
@@ -37,7 +38,8 @@ module.exports = function () {
   let module = {};
 
   module.getUrl = (text, options) => getUrl(text, defaultOptions(options));
-  module.pipe = (res, text, options) => request(module.getUrl(text, defaultOptions(options))).pipe(res);
+  module.serveFile = (res, text, options) => request(module.getUrl(text, options)).pipe(res);
+  module.pipe = (res, req) => module.serveFile(res, req.params.text, reqToOptions(req));
 
   return module;
 }

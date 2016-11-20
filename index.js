@@ -34,19 +34,7 @@ let getQueryObjectVoiceRSS = (text, options) => ({
   c: options.codec
 });
 
-module.exports = function (app) {
-  let module = {};
-
-  module.getUrl = (text, options) => getUrl(text, defaultOptions(options));
-  module.pipe = (res, text, options) => request(module.getUrl(text, defaultOptions(options))).pipe(res);
-
-  if(app) {
-    app.get('/say/:text.:codec', (req, res) => module.pipe(res, req.params.text, reqToOptions(req)));
-    app.get('/say/:text', (req, res) => module.pipe(res, req.params.text, reqToOptions(req)));
-    app.get('/say/:text/voice.:codec', (req, res) => module.pipe(res, req.params.text, reqToOptions(req)));
-    app.get('/tts/voice.:codec', (req, res) => module.pipe(res, req.query.text, reqToOptions(req)));
-    app.post('/tts/voice.:codec', (req, res) => module.pipe(res, req.body.text, reqToOptions(req)));
-  }
-
-  return module;
+module.exports = {
+  getUrl: (text, options) => getUrl(text, defaultOptions(options)),
+  pipe: (res, text, options) => request(module.getUrl(text, defaultOptions(options))).pipe(res)
 }
